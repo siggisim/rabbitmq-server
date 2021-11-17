@@ -56,9 +56,6 @@ jobs:
     #!   uses: mxschmitt/action-tmate@v3
     - name: RUN TESTS
       run: |
-        sudo sysctl -w net.ipv4.tcp_max_orphans=262144
-        sudo sysctl -w net.ipv4.tcp_max_syn_backlog=4096
-        sudo sysctl -w net.ipv4.tcp_max_tw_buckets=262144
         sudo sysctl -w net.ipv4.tcp_keepalive_time=10
         sudo ethtool -K eth0 tso off gso off gro off tx off rx off lro off
         bazelisk test //... \
