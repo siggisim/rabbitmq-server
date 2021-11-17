@@ -58,10 +58,11 @@ jobs:
       run: |
         # sudo sysctl -w net.ipv4.tcp_keepalive_time=60
         sudo ethtool -K eth0 tso off gso off gro off tx off rx off lro off
-        bazelisk test //... \
+        chmod +x bazel421
+        ./bazel421 test //... \
           --config=rbe-${{ matrix.erlang_version }} \
           --test_tag_filters=mixed-version-cluster,-exclusive,-aws \
-          --verbose_failures --experimental_remote_grpc_log=grpc.txt --remote_instance_name=testing1
+          --verbose_failures --experimental_remote_grpc_log=grpc.txt --remote_instance_name=testing421 --grpc_keepalive_without_calls=true
     - uses: actions/upload-artifact@v2
       if: failure()
       with:
